@@ -1,25 +1,28 @@
 from flask import Flask, request, jsonify, render_template, Response
 from transformers import VitsModel, AutoTokenizer
+from flask_cors import CORS, cross_origin
 import torch
 import scipy.io.wavfile
 from io import BytesIO
 
 app = Flask(__name__, static_folder='static')
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+CORS(app)
 
 # Load the model and tokenizer globally so they can be reused
 model = VitsModel.from_pretrained("facebook/mms-tts-vie")
 tokenizer = AutoTokenizer.from_pretrained("facebook/mms-tts-vie")
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
+@cross_origin()
 @app.route('/get-audio', methods=['POST'])
 def text_to_speech():
     try:
         # Get the text from the request body
         data = request.json
         text = data.get('text', '')
+
+        print('generating audio')
 
         if not text:
             return jsonify({"success": False,'errors': [{"code": "BAD_REQUEST", "message": "no text provided"}]}), 400
