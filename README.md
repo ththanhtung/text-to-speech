@@ -2,10 +2,10 @@
 
 ### Install the required dependencies:
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ### How to Run
 ```
-python server.py
+python3 server.py
 ```
