@@ -3,3 +3,4 @@ transformers==4.26.1
 flask-cors==3.0.10
 torch==1.13.1
 scipy==1.9.3
+Werkzeug==2.2.2
